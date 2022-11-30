@@ -1,0 +1,22 @@
+.films{
+    width: 76%;
+    margin-left: 20%;
+    margin-top: 4vh;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.tabTitle{
+    background: linear-gradient(#e66465, #9198e5);
+    width: 20%;
+    padding: 10px 15px;
+    color: white;
+    font-size: larger;
+    border-left: 10px solid orange;
+}
+
+.tabs{
+    display: flex;
+    flex-wrap: wrap;
+}
