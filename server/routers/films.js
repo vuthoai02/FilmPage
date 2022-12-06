@@ -11,6 +11,6 @@ router.get('/get-film-by-view', filmsControl.getFilmsByView);
 router.get('/get-film-by-like', filmsControl.getFilmsByLike);
 router.get('/get-film-by-date', filmsControl.getFilmsByDate);
 router.post('/create-films', filmsControl.createFilms);
-router.post('/delete-film', filmsControl.deleteFilm);
+router.delete('/delete-film', filmsControl.deleteFilm);
 
 export default router;

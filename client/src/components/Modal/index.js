@@ -28,7 +28,7 @@ export function MenuComponent(props) {
     >
       <List sx={{ pt: 0 }}>
         {list.map((elm, index) => (
-          <ListItem key={index} onClick={() => elm.action}>
+          <ListItem key={index} onClick={() => elm.action()}>
             <ListItemAvatar>{elm.icon}</ListItemAvatar>
             <ListItemText>{elm.label}</ListItemText>
           </ListItem>
@@ -59,7 +59,7 @@ export function DialogFormComponent(props) {
           ))}
       </DialogContent>
       <DialogActions>
-        <Button>Hủy</Button>
+        <Button onClick={onClose}>Hủy</Button>
         <Button variant="contained" onClick={handleSubmit}>Thêm</Button>
       </DialogActions>
     </Dialog>

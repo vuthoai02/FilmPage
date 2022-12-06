@@ -9,7 +9,7 @@ import * as filmsAction from "../../redux/actions/filmActions";
 import { filmsState$ } from "../../redux/selectors";
 
 export default function Admin() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState(null);
   const [rows, setRows] = React.useState([]);
@@ -18,8 +18,9 @@ export default function Admin() {
 
   const dispatch = useDispatch();
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (event, row) => {
+    setValues(row);
+    setAnchorEl(event.target);
   };
 
   const handleClose = () => {
@@ -47,6 +48,12 @@ export default function Admin() {
     }
   };
 
+  const handleDelete = () => {
+    if(values?._id){
+      dispatch(filmsAction.deleteFilm.deleteFilmRequest(values?._id));
+    }
+  }
+
   const handleCreateFilm = React.useCallback(() => {
     if (values) {
       const payload = { ...values, release: `${values?.release}` };
@@ -65,9 +72,6 @@ export default function Admin() {
       setRows(newFilms);
     }
   },[films])
-
-  console.log(rows);
-  // console.log(values);
 
   return (
     <Grid
@@ -101,7 +105,7 @@ export default function Admin() {
         </Button>
       </Box>
       <FilmsTable
-        columns={columns(handleClick, anchorEl, handleClose)}
+        columns={columns(handleClick, anchorEl, handleClose, handleClickOpen, handleDelete)}
         rows={rows}
       />
       <DialogFormComponent

@@ -47,3 +47,9 @@ export const getFilmsByDate = createActions({
   byDateSuccess: (payload) => payload,
   byDateFailure: (err) => err,
 });
+
+export const deleteFilm = createActions({
+  deleteFilmRequest: (payload) => payload,
+  deleteFilmSuccess: (payload) => payload,
+  deleteFilmFailure: (err) => err,
+});

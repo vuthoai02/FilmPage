@@ -17,3 +17,4 @@ export const getFilmsByName = (payload) => axios.get(`${URL}/films/get-film-by-n
 export const getFilmsByView = () => axios.get(`${URL}/films/get-film-by-view`);
 export const getFilmsByLike = () => axios.get(`${URL}/films/get-film-by-like`);
 export const getFilmsByDate = (payload) => axios.get(`${URL}/films/get-film-by-date`, {params: {year: payload}});
+export const deleteFilm = (payload) => axios.delete(`${URL}/films/delete-film`, {params: {id: payload}});
