@@ -41,17 +41,6 @@ export default function CategoryPages() {
     >
       <Typography
         sx={{
-          width: "95%",
-          fontSize: "24px",
-          color: "#fff",
-          fontWeight: "600",
-          fontFamily: "serif",
-        }}
-      >
-        RELAX FILM
-      </Typography>
-      <Typography
-        sx={{
           width: "70vw",
           marginBottom: "5px",
           padding: "10px",
@@ -73,8 +62,8 @@ export default function CategoryPages() {
           alignItems: films?'initial': 'center',
         }}
       >
-        {films ? (
-          films.map((elm, indx) => (
+        {films?.length !== 0 ? (
+          films?.map((elm, indx) => (
             <Card
               key={indx}
               poster={elm?.poster}
