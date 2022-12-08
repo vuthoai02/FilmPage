@@ -1,9 +1,14 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Grid, Tab, Box, Typography } from "@mui/material";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
+import * as filmActions from "../../redux/actions/filmActions";
+import { allFilmState$ } from "../../redux/selectors";
+import moment from "moment";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
+import Card from "../../components/Card";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -16,11 +21,13 @@ import VoteTab from "./Tabs/Vote";
 import banner from "../../asset/download.jpeg";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const imgList = [banner, banner, banner];
   const [tabs, setTab] = React.useState({
     tab: "new",
     label: "Phim mới",
   });
+  const allFilms = useSelector(allFilmState$);
   const handleChangeTab = (event, newValue) => {
     var label = "";
     if (newValue === "new") label = "Phim mới";
@@ -32,6 +39,12 @@ export default function Home() {
       label,
     });
   };
+
+  React.useEffect(() => {
+    if (!allFilms) dispatch(filmActions.getFilms.getFilmsRequest());
+  }, []);
+
+  console.log(allFilms);
   return (
     <Grid
       item
@@ -97,6 +110,21 @@ export default function Home() {
             </TabPanel>
           )}
         </TabContext>
+      </Grid>
+      <Grid className="films" sx={{display: 'flex'}}>
+        {allFilms &&
+          allFilms.map((elm, index) => (
+            <Card
+              key={index}
+              poster={elm?.poster}
+              name={elm?.name}
+              release={
+                elm?.release && moment(elm?.release).format("DD/MM/YYYY")
+              }
+              rating={elm?.rating}
+              films={elm}
+            />
+          ))}
       </Grid>
     </Grid>
   );

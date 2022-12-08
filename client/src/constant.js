@@ -5,4 +5,5 @@ export const INIT_STATE = {
         data: null,
         currentFilm: null,
     },
+    allFilms: null,
 }

@@ -8,6 +8,7 @@ import {
   getFilmsByLike,
   getFilmsByName,
   getFilmsByView,
+  deleteFilm
 } from "../actions/filmActions";
 
 export default function filmsReducers(state = INIT_STATE.films, action) {
@@ -19,6 +20,7 @@ export default function filmsReducers(state = INIT_STATE.films, action) {
     case getType(getFilmsByView.byViewFailure):
     case getType(getFilmsByLike.byLikeFailure):
     case getType(getFilmsByDate.byDateFailure):
+    case getType(deleteFilm.deleteFilmFailure):
       return state;
     case getType(createFilm.createFilmRequest):
     case getType(getFilms.getFilmsRequest):
@@ -27,6 +29,7 @@ export default function filmsReducers(state = INIT_STATE.films, action) {
     case getType(getFilmsByView.byViewRequest):
     case getType(getFilmsByLike.byLikeRequest):
     case getType(getFilmsByDate.byDateRequest):
+    case getType(deleteFilm.deleteFilmRequest):
       return {
         isLoading: true,
         ...state,
@@ -52,6 +55,12 @@ export default function filmsReducers(state = INIT_STATE.films, action) {
         isLoading: false,
         currentFilm: null,
         data: action.payload,
+      };
+    case getType(deleteFilm.deleteFilmSuccess):
+      return {
+        isLoading: false,
+        currentFilm: null,
+        data: [...state.data.filter((elm) => elm.id !== action.payload)],
       };
     default:
       return state;

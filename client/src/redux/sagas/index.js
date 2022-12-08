@@ -108,10 +108,21 @@ function* createFilmSaga(action) {
   try {
     const film = yield call(api.createFilm, action.payload);
     yield put(filmActions.createFilm.createFilmSuccess(film.data));
-    NotificationManager.success("", "Thêm phim thành công!", 3000);
+    NotificationManager.success("", film.data.message, 3000);
   } catch (error) {
     NotificationManager.error("", error.response.data.message, 3000);
     yield put(filmActions.createFilm.createUserFailure(error));
+  }
+}
+
+function* deleteFilmSaga(action) {
+  try {
+    const film = yield call(api.deleteFilm, action.payload);
+    yield put(filmActions.deleteFilm.deleteFilmSuccess(film.data));
+    NotificationManager.success("", film.data.message, 3000);
+  } catch (error) {
+    NotificationManager.error("", error.response.data.message, 3000);
+    yield put(filmActions.deleteFilm.deleteFilmFailure(error));
   }
 }
 
@@ -129,6 +140,7 @@ function* mySaga() {
   yield takeLatest(filmActions.getFilmsByView.byViewRequest, getFilmsByViewSaga);
   yield takeLatest(filmActions.getFilmsByLike.byLikeRequest, getFilmsByLikeSaga);
   yield takeLatest(filmActions.getFilmsByDate.byDateRequest, getFilmsByDateSaga);
+  yield takeLatest(filmActions.deleteFilm.deleteFilmRequest, deleteFilmSaga);
 }
 
 export default mySaga;

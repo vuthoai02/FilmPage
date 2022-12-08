@@ -1,15 +1,19 @@
 import { Edit, Delete, More } from "@mui/icons-material";
 import { MenuComponent } from "../../../components/Modal";
-import { Button } from "@mui/material";
-import * as yup from "yup";
-import { useFormikContext } from "formik";
+import { Button, Menu } from "@mui/material";
 
-export const popoverList = [
-  { label: "Sửa nội dung", icon: <Edit />, action: () => console.log("helo") },
-  { label: "Xóa phim", icon: <Delete />, action: () => console.log("delete") },
+export const popoverList = (handleClickOpen, handleDelete) => [
+  { label: "Sửa nội dung", icon: <Edit />, action: () => handleClickOpen() },
+  { label: "Xóa phim", icon: <Delete />, action: () => handleDelete() },
 ];
 
-export const columns = (props) => [
+export const columns = (
+  handleClick,
+  anchorEl,
+  handleClose,
+  handleClickOpen,
+  handleDelete
+) => [
   { field: "id", headerName: "ID", width: 70 },
   { field: "filmCode", headerName: "Mã phim", width: 200 },
   { field: "name", headerName: "Tên phim", width: 250 },
@@ -24,21 +28,21 @@ export const columns = (props) => [
     field: "abc",
     headerName: "Thao tác",
     width: 160,
-    renderCell: () => (
+    renderCell: (rows) => (
       <div>
         <Button
-          onClick={props.handleClick}
+          onClick={(e) => handleClick(e, rows?.row)}
           id="button"
-          aria-controls={Boolean(props.anchorEl) ? "menu" : undefined}
+          aria-controls={Boolean(anchorEl) ? "menu" : undefined}
           aria-haspopup="true"
-          aria-expanded={Boolean(props.anchorEl) ? "true" : undefined}
+          aria-expanded={Boolean(anchorEl) ? "true" : undefined}
         >
           <More />
         </Button>
         <MenuComponent
-          anchorEl={props.anchorEl}
-          onClose={props.handleClose}
-          list={popoverList}
+          anchorEl={anchorEl}
+          onClose={() => handleClose()}
+          list={popoverList(handleClickOpen, handleDelete)}
         />
       </div>
     ),
@@ -69,14 +73,26 @@ export const filmsField = (values) => {
       width: 4,
       value: values?.category,
     },
-    { key: "like", label: "Số lượt thích", width: 4, value: values?.like, type: 'int' },
-    { key: "rating", label: "Đánh giá", width: 3, value: values?.rating, type: 'float' },
+    {
+      key: "like",
+      label: "Số lượt thích",
+      width: 4,
+      value: values?.like,
+      type: "int",
+    },
+    {
+      key: "rating",
+      label: "Đánh giá",
+      width: 3,
+      value: values?.rating,
+      type: "float",
+    },
     {
       key: "totalView",
       label: "Tổng số lượt xem",
       width: 4,
       value: values?.totalView,
-      type: 'int'
+      type: "int",
     },
     {
       key: "description",

@@ -65,7 +65,8 @@ export const createFilms = async (req, res) => {
   try {
     const existFilm = await FilmModel.findOne({ name: film.name });
     if (existFilm) {
-      return res.status(400).json({ success: false, message: "Đã có phim!" });
+      await FilmModel.findOneAndUpdate(existFilm.id, {...film});
+      res.status(200).json({ success: true, message: "Cập nhật thành công" });
     }
     const newFilms = new FilmModel(film);
     await newFilms.save();
@@ -114,9 +115,9 @@ export const getFilmsByDate = async (req, res) => {
 };
 
 export const deleteFilm = async (req, res) => {
-  const filmCode = req.query.filmCode;
+  const filmCode = req.query.id;
   try {
-    FilmModel.findOne(filmCode, function (error, film) {
+    FilmModel.findOne({_id: filmCode}, function (error, film) {
       film.remove();
     });
     return res.status(200).json({
