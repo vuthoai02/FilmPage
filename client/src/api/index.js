@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "https://relaxfilm.onrender.com/";
+const URL = "https://relaxfilm.onrender.com";
 
 //USER
 export const fetchUser = (payload) => axios.post(`${URL}/users/login`, payload);
